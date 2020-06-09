@@ -9,7 +9,7 @@ using WtaTennisPlayers.Api.Models;
 
 namespace WtaTennisPlayers.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class WtaPlayersController : Controller
     {
