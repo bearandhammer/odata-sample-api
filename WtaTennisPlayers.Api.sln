@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WtaTennisPlayers.Api", "WtaTennisPlayers.Api\WtaTennisPlayers.Api.csproj", "{F1828880-C95F-4360-A565-FDB33409E25F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WtaTennisPlayers.Api", "WtaTennisPlayers.Api\WtaTennisPlayers.Api.csproj", "{F1828880-C95F-4360-A565-FDB33409E25F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WtaTennisPlayers.Services", "WtaTennisPlayers.Services\WtaTennisPlayers.Services.csproj", "{3471EF0E-1168-4004-8B19-8EEF4C33A77C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WtaTennisPlayers.Models", "WtaTennisPlayers.Models\WtaTennisPlayers.Models.csproj", "{AD8116F7-3848-489F-B345-3E7B935593F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WtaTennisPlayers.Shared", "WtaTennisPlayers.Shared\WtaTennisPlayers.Shared.csproj", "{B00C5707-B298-46E5-AA7F-9D53984DD150}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{F1828880-C95F-4360-A565-FDB33409E25F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1828880-C95F-4360-A565-FDB33409E25F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1828880-C95F-4360-A565-FDB33409E25F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3471EF0E-1168-4004-8B19-8EEF4C33A77C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3471EF0E-1168-4004-8B19-8EEF4C33A77C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3471EF0E-1168-4004-8B19-8EEF4C33A77C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3471EF0E-1168-4004-8B19-8EEF4C33A77C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD8116F7-3848-489F-B345-3E7B935593F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD8116F7-3848-489F-B345-3E7B935593F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD8116F7-3848-489F-B345-3E7B935593F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD8116F7-3848-489F-B345-3E7B935593F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B00C5707-B298-46E5-AA7F-9D53984DD150}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B00C5707-B298-46E5-AA7F-9D53984DD150}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B00C5707-B298-46E5-AA7F-9D53984DD150}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B00C5707-B298-46E5-AA7F-9D53984DD150}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

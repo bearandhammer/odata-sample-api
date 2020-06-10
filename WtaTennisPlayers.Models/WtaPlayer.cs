@@ -1,12 +1,10 @@
-﻿namespace WtaTennisPlayers.Api.Models
+﻿namespace WtaTennisPlayers.Models
 {
     /// <summary>
     /// Class that represents a WTA tennis player (basic information only).
     /// </summary>
     public class WtaPlayer
     {
-        #region Public Properties
-
         /// <summary>
         /// The players tour rank.
         /// </summary>
@@ -22,10 +20,6 @@
         /// </summary>
         public int Points { get; set; }
 
-        #endregion Public Properties
-
-        #region Constructor
-
         /// <summary>
         /// Entry point constructor for creating a new WtaPlayer object.
         /// </summary>
@@ -38,7 +32,5 @@
             Name = playerName;
             Points = playerPoints;
         }
-
-        #endregion Constructor
     }
 }

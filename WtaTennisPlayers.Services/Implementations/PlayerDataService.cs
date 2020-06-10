@@ -1,27 +1,64 @@
 ﻿using HtmlAgilityPack;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
-using WtaTennisPlayers.Api.Models;
+using WtaTennisPlayers.Models;
+using WtaTennisPlayers.Services.Implementations;
+using WtaTennisPlayers.Shared;
+using WtaTennisPlayers.Shared.AppSettings;
 
-namespace WtaTennisPlayers.Api.DataStore
+namespace WtaTennisPlayers.Services.Interfaces
 {
-    /// <summary>
-    /// Represents a simple mock data store for retrieving the top
-    /// 100 WTA tennis players (using https://live-tennis.eu/en/wta-live-ranking).
-    /// </summary>
-    public class PlayerDataStore
+    public class PlayerDataService : IPlayerDataService
     {
-        #region Constants
-
         /// <summary>
         /// This is the current live ranking WTA website address.
         /// </summary>
         private const string WTA_LIVE_RANKING_SITE = "https://live-tennis.eu/en/wta-live-ranking";
 
-        #endregion Constants
+        /// <summary>
+        /// A type for interacting with the cache.
+        /// </summary>
+        private readonly IMemoryCache cache;
+
+        /// <summary>
+        /// The cache timeout to apply to any
+        /// caching operations.
+        /// </summary>
+        private readonly int cacheTimeout;
+
+        /// <summary>
+        /// Initialises a new instance of the service, as required (passing in dependencies).
+        /// </summary>
+        /// <param name="memCache">A type for interacting with the cache.</param>
+        /// <param name="configProvider">The cache timeout to apply to any caching operations.</param>
+        public PlayerDataService(IMemoryCache memCache, IConfiguration configProvider)
+        {
+            cache = memCache;
+            cacheTimeout = configProvider.GetSection(nameof(CacheSettings)).Get<CacheSettings>().CacheTimeoutInMinutes;
+        }
+
+        /// <inheritdoc/>
+        public IEnumerable<WtaPlayer> GetPlayersData()
+        {
+            // Attempt to retrieve WTA player data from the memory cache (or go and retrieve it, if necessary)
+            if (!cache.TryGetValue(CacheKeys.PlayerData, out List<WtaPlayer> playerData))
+            {
+                // Initialise the WTA player data and store the results in the cache (with a stock expiry time)
+                playerData = GetDataFromLiveRankingsPage();
+
+                cache.Set(CacheKeys.PlayerData, playerData, new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromMinutes(cacheTimeout)));
+            }
+
+            return playerData;
+        }
+
+        #region Data Store Private Static Methods
 
         #region Data Store Public Methods
 
@@ -30,7 +67,7 @@ namespace WtaTennisPlayers.Api.DataStore
         /// top 100 WTA tennis players from the live-tennis.eu website (a small touch of HTML scraping in place).
         /// </summary>
         /// <returns>A List of <see cref="WtaPlayer"/> types, to be further interrogated based on the users query.</returns>
-        public List<WtaPlayer> GetPlayerData()
+        private static List<WtaPlayer> GetDataFromLiveRankingsPage()
         {
             List<WtaPlayer> liveRankingPlayers = new List<WtaPlayer>();
 
@@ -54,8 +91,6 @@ namespace WtaTennisPlayers.Api.DataStore
         }
 
         #endregion Data Store Public Methods
-
-        #region Data Store Private Static Methods
 
         /// <summary>
         /// Simple static helper method that gets the HtmlDocument with WTA live ranking HTML.
