@@ -111,15 +111,15 @@ namespace WtaTennisPlayers.Services.Interfaces
             // keeping in mind that spacer 'tr' elements exist (without a 'td' Count of 14, so also remove these elements)
             HtmlNodeCollection tbodyRowNodes = wtaPlayerHtmlDocument.DocumentNode.SelectNodes("//tbody/tr");
 
-            IEnumerable<HtmlNode> everyOtherNode = tbodyRowNodes
-                .Where((node, index) => index % 2 == 0 && node?.ChildNodes?.Count == 14)
+            IEnumerable<HtmlNode> topOneHundredPlayers = tbodyRowNodes
+                .Where(node => node?.ChildNodes?.Count == 14)
                 .Take(100);
 
             // Setup a regex to clean up the rank information
             Regex rankCleanerRegex = new Regex(@"<[^>]+>|&nbsp;");
 
             // Construct and return WtaPlayer objects based on some very (fixed, agreed!) ripping of text from td elements
-            return everyOtherNode.Select(node =>
+            return topOneHundredPlayers.Select(node =>
                  new WtaPlayer(int.Parse(rankCleanerRegex.Replace(node.ChildNodes[0].InnerText, string.Empty).Trim()),
                     node.ChildNodes[3].InnerText.Trim(),
                     int.Parse(node.ChildNodes[6].InnerText.Trim())));
